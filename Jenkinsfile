@@ -26,19 +26,28 @@ pipeline{
 
         stage('Build & Test') {
             steps {
-                buildStages.buildAndTest()
+                script{
+                    buildStages.buildAndTest()
+                }
+                
             }
         }
 
         stage('Publish Test Results') {
             steps {
-                buildStages.publishTestResults()
+                script{
+                    buildStages.publishTestResults()
+                }
+                
             }
         }
 
         stage ('publish Artifacts'){
             steps{
-                buildStages.publishArtifacts()
+                script{
+                    buildStages.publishArtifacts()
+                }
+                
             }
         }
         post {
