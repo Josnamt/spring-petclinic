@@ -50,13 +50,13 @@ pipeline{
                 
             }
         }
-        post {
+    }
+     post {
             success {
                 echo "Build success"
             }
             failure {
                 echo "Build failed"
             }
-        }
+        }   
     }
-}
