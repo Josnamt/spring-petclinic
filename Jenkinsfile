@@ -22,43 +22,31 @@ pipeline {
         }
 
         stage('Build & Test') {
-            agent {
-                docker {
-                    image 'maven:3.9.6-eclipse-temurin-21'
-                    args '-v /var/run/docker.sock:/var/run/docker.sock'
-                }
-            }
             steps {
                 script {
-                    buildStages.buildAndTest()
+                    docker.image('maven:3.9.6-eclipse-temurin-21').inside('-v /var/run/docker.sock:/var/run/docker.sock') {
+                        buildStages.buildAndTest()
+                    }
                 }
             }
         }
 
         stage('Publish Test Results') {
-            agent {
-                docker {
-                    image 'maven:3.9.6-eclipse-temurin-21'
-                    args '-v /var/run/docker.sock:/var/run/docker.sock'
-                }
-            }
             steps {
                 script {
-                    buildStages.publishTestResults()
+                    docker.image('maven:3.9.6-eclipse-temurin-21').inside('-v /var/run/docker.sock:/var/run/docker.sock') {
+                        buildStages.publishTestResults()
+                    }
                 }
             }
         }
 
         stage('Publish Artifacts') {
-            agent {
-                docker {
-                    image 'maven:3.9.6-eclipse-temurin-21'
-                    args '-v /var/run/docker.sock:/var/run/docker.sock'
-                }
-            }
             steps {
                 script {
-                    buildStages.publishArtifacts()
+                    docker.image('maven:3.9.6-eclipse-temurin-21').inside('-v /var/run/docker.sock:/var/run/docker.sock') {
+                        buildStages.publishArtifacts()
+                    }
                 }
             }
         }
