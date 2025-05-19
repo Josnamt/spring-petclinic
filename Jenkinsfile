@@ -1,12 +1,7 @@
 @Library('jenk_lib') _
 
 pipeline {
-    agent {
-        docker {
-            image 'maven:3.9.6-eclipse-temurin-21'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
-        }
-    }
+    agent any
 
     environment {
         ARTIFACTORY_SERVER = 'artifactory-prod'
@@ -27,6 +22,12 @@ pipeline {
         }
 
         stage('Build & Test') {
+            agent {
+                docker {
+                    image 'maven:3.9.6-eclipse-temurin-21'
+                    args '-v /var/run/docker.sock:/var/run/docker.sock'
+                }
+            }
             steps {
                 script {
                     buildStages.buildAndTest()
@@ -35,6 +36,12 @@ pipeline {
         }
 
         stage('Publish Test Results') {
+            agent {
+                docker {
+                    image 'maven:3.9.6-eclipse-temurin-21'
+                    args '-v /var/run/docker.sock:/var/run/docker.sock'
+                }
+            }
             steps {
                 script {
                     buildStages.publishTestResults()
@@ -43,6 +50,12 @@ pipeline {
         }
 
         stage('Publish Artifacts') {
+            agent {
+                docker {
+                    image 'maven:3.9.6-eclipse-temurin-21'
+                    args '-v /var/run/docker.sock:/var/run/docker.sock'
+                }
+            }
             steps {
                 script {
                     buildStages.publishArtifacts()
